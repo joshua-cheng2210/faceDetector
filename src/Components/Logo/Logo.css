@@ -1,6 +1,7 @@
-/* .Tilt{
-    background-color: beige;
-} */
+.Tilt{
+  /* background-color: beige; */
+  width: 100px;
+}
 @keyframes logo-spin {
     from {
       transform: rotate(0deg);
@@ -10,7 +11,7 @@
     }
 }
 
-.logo-img img{
+.logo-img{
     width: 100px;
     height: 100px;
     animation: logo-spin infinite 20s linear;
