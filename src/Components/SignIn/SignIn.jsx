@@ -1,6 +1,7 @@
 import React from 'react'
+import {routeOptions} from '../../App'
 
-function SignIn() {
+function SignIn({onRouteChange}) {
   return (
     <div className="flex items-center justify-center vh-100 ">
       <form 
@@ -45,6 +46,7 @@ function SignIn() {
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
             type="submit"
             value="Sign in"
+            onClick={() => onRouteChange(routeOptions.HomeApp)}
           />
         </div>
         <div className="center">

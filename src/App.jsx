@@ -69,7 +69,7 @@ const getClarifyRequest = ((imageURL) => {
   // return requestOptions
 })
 
-const routeOptions = {
+export const routeOptions = {
   SignIn: "SignIn",
   HomeApp: "HomeApp"
 }
@@ -82,7 +82,7 @@ export class App extends Component {
       imageURL: "",
       boundingBoxesInfo: [],
       output: "",
-      route: routeOptions.SignIn,
+      route: routeOptions.HomeApp,
       MODEL_ID: 'face-detection', // got it from the getClarifyRequest()
       MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105' // got it from the getClarifyRequest()
     }
@@ -185,14 +185,20 @@ export class App extends Component {
     // )
 
   }
+  
+  onRouteChange = (newRoute) => {
+    // console.log("b4 change: ", this.state.route)
+    this.setState({route: newRoute})
+    // console.log("after change: ", this.state.route)
+  }
 
   render() {
     return (
       <div className="App">
         <ParticlesBg type="circle" bg={true} className="particles"/>
-        {this.state.route === routeOptions.SignIn && <SignIn />}
+        {this.state.route === routeOptions.SignIn && <SignIn onRouteChange={this.onRouteChange}/>}
         {this.state.route === routeOptions.HomeApp && <div>
-          <Navigation />
+          <Navigation onRouteChange={this.onRouteChange}/>
           <Logo />
           <Rank />
           <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit}/>
