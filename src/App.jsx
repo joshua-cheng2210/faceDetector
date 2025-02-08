@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
+import SignIn from "./Components/SignIn/SignIn"
 import Navigation from "./Components/Navigation/Navigation"
 import Logo from "./Components/Logo/Logo"
 import Rank from "./Components/Rank/Rank"
@@ -68,6 +69,10 @@ const getClarifyRequest = ((imageURL) => {
   // return requestOptions
 })
 
+const routeOptions = {
+  SignIn: "SignIn",
+  HomeApp: "HomeApp"
+}
 
 export class App extends Component {
   constructor(){
@@ -77,7 +82,7 @@ export class App extends Component {
       imageURL: "",
       boundingBoxesInfo: [],
       output: "",
-      route: "home",
+      route: routeOptions.SignIn,
       MODEL_ID: 'face-detection', // got it from the getClarifyRequest()
       MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105' // got it from the getClarifyRequest()
     }
@@ -169,7 +174,7 @@ export class App extends Component {
     })
     .catch(error => console.log('error', error));
 
-    //OLD METHOD of usingthe API
+    //OLD METHOD of using the API
     // app.models.predict("", this.state.input).then(
     //   function(response){
     //     console.log(response)
@@ -185,11 +190,14 @@ export class App extends Component {
     return (
       <div className="App">
         <ParticlesBg type="circle" bg={true} className="particles"/>
-        <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit}/>
-        <FaceDetector boxes={this.state.boundingBoxesInfo} inputIMG={this.state.imageURL}/>
+        {this.state.route === routeOptions.SignIn && <SignIn />}
+        {this.state.route === routeOptions.HomeApp && <div>
+          <Navigation />
+          <Logo />
+          <Rank />
+          <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit}/>
+          <FaceDetector boxes={this.state.boundingBoxesInfo} inputIMG={this.state.imageURL}/>
+        </div>}
         
       </div>
     )
