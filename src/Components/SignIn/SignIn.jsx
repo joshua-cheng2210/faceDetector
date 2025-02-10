@@ -1,16 +1,15 @@
 import React from 'react'
 import {routeOptions} from '../../App'
 
-function SignIn({onRouteChange}) {
+function SignIn({onRouteChange, updateIsSignedIn}) {
   return (
     <div className="flex items-center justify-center vh-100 ">
       <form 
-        // onSubmit={handleSubmit} 
         className="pa4 br3 shadow-1"
         style={{ minWidth: '50%', minHeight: 'auto'}}
       >
-        {/* input email */}
         <h2 className="f3 fw6 ph0 mh0 tc">Sign In</h2>
+        {/* input email */}
         <div className="mt3">
           <label className="db fw6 lh-copy f6" htmlFor="email-address">
             Email
@@ -46,7 +45,10 @@ function SignIn({onRouteChange}) {
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
             type="submit"
             value="Sign in"
-            onClick={() => onRouteChange(routeOptions.HomeApp)}
+            onClick={() => {
+              // updateIsSignedIn()
+              onRouteChange(routeOptions.HomeApp)
+            }}
           />
         </div>
         <div className="center">

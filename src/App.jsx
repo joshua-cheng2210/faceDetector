@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import SignIn from "./Components/SignIn/SignIn"
+import RegisterPage from './Components/RegisterPage/RegisterPage'
 import Navigation from "./Components/Navigation/Navigation"
 import Logo from "./Components/Logo/Logo"
 import Rank from "./Components/Rank/Rank"
@@ -59,6 +60,7 @@ const getClarifyRequest = ((imageURL) => {
   const requestOptions = {
       method: 'POST',
       headers: {
+          'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Key ' + PAT
       },
@@ -71,7 +73,8 @@ const getClarifyRequest = ((imageURL) => {
 
 export const routeOptions = {
   SignIn: "SignIn",
-  HomeApp: "HomeApp"
+  HomeApp: "HomeApp",
+  Register: "Register"
 }
 
 export class App extends Component {
@@ -82,10 +85,15 @@ export class App extends Component {
       imageURL: "",
       boundingBoxesInfo: [],
       output: "",
-      route: routeOptions.HomeApp,
+      isSignedIn: false,
+      route: routeOptions.SignIn,
       MODEL_ID: 'face-detection', // got it from the getClarifyRequest()
       MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105' // got it from the getClarifyRequest()
     }
+  }
+
+  updateIsSignedIn = () => {
+    this.setState(prevState => ({ isSignedIn: !prevState.isSignedIn }));
   }
 
   onInputchange = (event) => {
@@ -135,7 +143,8 @@ export class App extends Component {
   onButtonSubmit = () => {
     this.setState({imageURL: this.state.input})
 
-    // testing with image: https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
+    // testing with image: 
+    // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
     console.log(this.state.input)
     // console.log("testing submit button")
     const requestOptions = getClarifyRequest(this.state.input);
@@ -196,12 +205,21 @@ export class App extends Component {
     return (
       <div className="App">
         <ParticlesBg type="circle" bg={true} className="particles"/>
-        {this.state.route === routeOptions.SignIn && <SignIn onRouteChange={this.onRouteChange}/>}
+        {this.state.route === routeOptions.SignIn && <div>
+          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
+          <SignIn onRouteChange={this.onRouteChange} updateIsSignedIn={this.updateIsSignedIn}/>
+        </div>}
+
+        {this.state.route === routeOptions.Register && <div>
+          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
+          <RegisterPage onRouteChange={this.onRouteChange}/>
+        </div>}
+
         {this.state.route === routeOptions.HomeApp && <div>
-          <Navigation onRouteChange={this.onRouteChange}/>
+          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
           <Logo />
           <Rank />
-          <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit}/>
+          <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit} />
           <FaceDetector boxes={this.state.boundingBoxesInfo} inputIMG={this.state.imageURL}/>
         </div>}
         
