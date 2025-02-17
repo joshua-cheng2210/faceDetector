@@ -3,7 +3,7 @@ import {routeOptions} from '../../App'
 
 function RegisterPage({onRouteChange}) {
   return (
-    <div className="flex items-center justify-center vh-100 ">
+    <div className="flex items-center justify-center vh-50">
           <form 
             className="pa4 br3 shadow-1"
             style={{ minWidth: '50%', minHeight: 'auto'}}

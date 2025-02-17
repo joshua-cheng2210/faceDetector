@@ -56,19 +56,21 @@ const getClarifyRequest = ((imageURL) => {
         }
       ]
   });
+  console.log("body: ", JSON.parse(raw))
 
   const requestOptions = {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Key ' + PAT
+          'Authorization': 'Key ' + PAT,
+          'Access-Control-Allow-Origin' : "*",
+          "origin" : "*"
       },
       body: raw
   };
 
   return requestOptions
-  // return requestOptions
 })
 
 export const routeOptions = {
@@ -86,7 +88,7 @@ export class App extends Component {
       boundingBoxesInfo: [],
       output: "",
       isSignedIn: false,
-      route: routeOptions.SignIn,
+      route: routeOptions.HomeApp,
       MODEL_ID: 'face-detection', // got it from the getClarifyRequest()
       MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105' // got it from the getClarifyRequest()
     }
@@ -150,11 +152,11 @@ export class App extends Component {
     const requestOptions = getClarifyRequest(this.state.input);
     const url = "https://api.clarifai.com/v2/models/" + this.state.MODEL_ID + "/outputs";
     // console.log("url", url)
-    // console.log("requestOptions: ", requestOptions)
+    // console.log("requestOptions: ", JSON.parse(requestOptions))
 
     fetch(url, requestOptions) // optionally specify the model_version_id to get different accurate models like this // fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
     .then(response => {
-      console.log("response: ", response)
+      console.log("response: ", response.json())
       response.json()})
     .then(result => {
         console.log("result:", result)
