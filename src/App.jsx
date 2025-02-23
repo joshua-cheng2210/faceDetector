@@ -88,7 +88,7 @@ export class App extends Component {
       boundingBoxesInfo: [],
       output: "",
       isSignedIn: false,
-      route: routeOptions.HomeApp,
+      route: routeOptions.SignIn,
       MODEL_ID: 'face-detection', // got it from the getClarifyRequest()
       MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105' // got it from the getClarifyRequest()
     }
@@ -142,6 +142,12 @@ export class App extends Component {
   });
   }
 
+  // componentDidMount() {
+  //   fetch("http://localhost:3069/") // cehck the port used in the routing part fo the back end code
+  //   .then(response => response.json())
+  //   .then(data => console.log(data))
+  // }
+
   onButtonSubmit = () => {
     this.setState({imageURL: this.state.input})
 
@@ -161,27 +167,6 @@ export class App extends Component {
     .then(result => {
         console.log("result:", result)
         this.getBoundingBoxes(result.outputs[0].data.regions);
-        
-        // const regions = result.outputs[0].data.regions;
-        
-        // regions.forEach(region => {
-        //     // Accessing and rounding the bounding box values
-        //     const boundingBox = region.region_info.bounding_box;
-        //     const topRow = boundingBox.top_row.toFixed(3);
-        //     const leftCol = boundingBox.left_col.toFixed(3);
-        //     const bottomRow = boundingBox.bottom_row.toFixed(3);
-        //     const rightCol = boundingBox.right_col.toFixed(3);
-
-        //     region.data.concepts.forEach(concept => {
-        //         // Accessing and rounding the concept value
-        //         const name = concept.name;
-        //         const value = concept.value.toFixed(4);
-
-        //         console.log(`${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`);
-                
-        //     });
-        // });
-
     })
     .catch(error => console.log('error', error));
 
