@@ -27,7 +27,7 @@ class SignIn extends React.Component {
     // console.log("this.state.email: ", this.state.email)
     // console.log("this.state.password: ", this.state.password)
     event.preventDefault(); // Prevent the default form submission behavior
-    const { onRouteChange, updateIsSignedIn } = this.props;
+    const { onRouteChange, updateIsSignedIn, loadUser } = this.props;
     // Perform sign-in logic here, e.g., validate credentials
     fetch("http://localhost:3069/signin", {
       method : "post",
@@ -39,7 +39,8 @@ class SignIn extends React.Component {
     })
     .then(response => response.json())
     .then(data => {
-      if (data === "login success"){
+      if (data["login"] === "success"){
+        const {login, userX} = data
         updateIsSignedIn()
         onRouteChange(routeOptions.HomeApp)
       }

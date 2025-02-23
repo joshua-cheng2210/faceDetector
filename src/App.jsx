@@ -90,8 +90,21 @@ export class App extends Component {
       isSignedIn: false,
       route: routeOptions.SignIn,
       MODEL_ID: 'face-detection', // got it from the getClarifyRequest()
-      MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105' // got it from the getClarifyRequest()
+      MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105', // got it from the getClarifyRequest()
+      user:{
+        id: "",
+        name: "",
+        email: "",
+        entries: 0,
+        joined: ""
+      }
     }
+  }
+
+  loadUser = (userX) => {
+    this.setState({
+      user: userX
+    })
   }
 
   updateIsSignedIn = () => {
@@ -194,12 +207,12 @@ export class App extends Component {
         <ParticlesBg type="circle" bg={true} className="particles"/>
         {this.state.route === routeOptions.SignIn && <div>
           <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
-          <SignIn onRouteChange={this.onRouteChange} updateIsSignedIn={this.updateIsSignedIn}/>
+          <SignIn onRouteChange={this.onRouteChange} updateIsSignedIn={this.updateIsSignedIn} loadUser={this.loadUser}/>
         </div>}
 
         {this.state.route === routeOptions.Register && <div>
           <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
-          <RegisterPage onRouteChange={this.onRouteChange}/>
+          <RegisterPage onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
         </div>}
 
         {this.state.route === routeOptions.HomeApp && <div>
