@@ -1,15 +1,60 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import {routeOptions} from '../../App'
+import { routeOptions } from '../../App';
 
 class SignIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    };
+  }
+
+  handleEmailChange = (event) => {
+    // console.log("this.state.email: ", this.state.email)
+    // console.log("this.state.password: ", this.state.password)
+    this.setState({ email: event.target.value });
+  }
+
+  handlePasswordChange = (event) => {
+    // console.log("this.state.email: ", this.state.email)
+    // console.log("this.state.password: ", this.state.password)
+    this.setState({ password: event.target.value });
+  }
+
+  handleSubmit = (event) => {
+    // console.log("this.state.email: ", this.state.email)
+    // console.log("this.state.password: ", this.state.password)
+    event.preventDefault(); // Prevent the default form submission behavior
+    const { onRouteChange, updateIsSignedIn } = this.props;
+    // Perform sign-in logic here, e.g., validate credentials
+    fetch("http://localhost:3069/signin", {
+      method : "post",
+      headers : {"Content-Type" : "application/json"},
+      body : JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data === "login success"){
+        updateIsSignedIn()
+        onRouteChange(routeOptions.HomeApp)
+      }
+    })
+  }
+
   render() {
-    const {onRouteChange, updateIsSignedIn} = this.props
+    // const { onRouteChange, updateIsSignedIn } = this.props;
+    const { email, password } = this.state;
     return (
       <div className="flex items-center justify-center vh-50 ">
         <form 
           className="pa4 br3 shadow-1"
           style={{ minWidth: '50%', minHeight: 'auto'}}
+          onSubmit={this.handleSubmit} // Use onSubmit to handle form submission
         >
           <h2 className="f3 fw6 ph0 mh0 tc">Sign In</h2>
           {/* input email */}
@@ -22,8 +67,8 @@ class SignIn extends React.Component {
               type="email"
               name="email-address"
               id="email-address"
-              // value={email}
-              // onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              onChange={this.handleEmailChange}
               required
             />
           </div>
@@ -37,8 +82,8 @@ class SignIn extends React.Component {
               type="password"
               name="password"
               id="password"
-              // value={password}
-              // onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              onChange={this.handlePasswordChange}
               required
             />
           </div>
@@ -48,10 +93,6 @@ class SignIn extends React.Component {
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Sign in"
-              onClick={() => {
-                // updateIsSignedIn()
-                onRouteChange(routeOptions.HomeApp) // only change to the homeapp is sign in successful. rn default to always successful
-              }}
             />
           </div>
           <div className="center">
@@ -59,8 +100,8 @@ class SignIn extends React.Component {
           </div>
         </form>
       </div>
-    )
-  } 
+    );
+  }
 }
 
 SignIn.propTypes = {
@@ -68,4 +109,4 @@ SignIn.propTypes = {
   updateIsSignedIn: PropTypes.func.isRequired
 };
 
-export default SignIn
+export default SignIn;
