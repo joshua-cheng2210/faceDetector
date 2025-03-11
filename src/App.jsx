@@ -30,8 +30,8 @@ const getClarifyRequest = ((imageURL) => {
   // Since you're making inferences outside your app's scope
   const USER_ID = 'chen7647';
   // const USER_ID = 'clarifai';
-  const APP_ID = 'face Detector';
-  // const APP_ID = 'main';
+  // const APP_ID = 'face Detector';
+  const APP_ID = 'my-first-application-ddxi3q';
   // Change these to whatever model and image URL you want to use
   const MODEL_ID = 'face-detection';
   const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
@@ -45,16 +45,16 @@ const getClarifyRequest = ((imageURL) => {
       "user_id": USER_ID,
         "app_id": APP_ID
       },
-      "inputs": [
-        {
-            "data": {
-                "image": {
-                    "url": IMAGE_URL
-                    // "base64": IMAGE_BYTES_STRING
-                }
-            }
+    "inputs": [
+      {
+        "data": {
+          "image": {
+            "url": IMAGE_URL
+            // "base64": IMAGE_BYTES_STRING
+          }
         }
-      ]
+      }
+    ]
   });
   console.log("body: ", JSON.parse(raw))
 
@@ -64,8 +64,8 @@ const getClarifyRequest = ((imageURL) => {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Key ' + PAT,
-          'Access-Control-Allow-Origin' : "*",
-          "origin" : "*"
+          // 'Access-Control-Allow-Origin' : "*",
+          // "origin" : "*"
       },
       body: raw
   };
@@ -88,7 +88,7 @@ export class App extends Component {
       boundingBoxesInfo: [],
       output: "",
       isSignedIn: false,
-      route: routeOptions.SignIn,
+      route: routeOptions.HomeApp,
       MODEL_ID: 'face-detection', // got it from the getClarifyRequest()
       MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105', // got it from the getClarifyRequest()
       user:{
@@ -169,7 +169,7 @@ export class App extends Component {
     console.log(this.state.input)
     // console.log("testing submit button")
     const requestOptions = getClarifyRequest(this.state.input);
-    const url = "https://api.clarifai.com/v2/models/" + this.state.MODEL_ID + "/outputs";
+    const url = "https://api.clarifai.com/v2/models/" + this.state.MODEL_ID + "/versions/" + this.state.MODEL_VERSION_ID  + "/outputs";
     // console.log("url", url)
     // console.log("requestOptions: ", JSON.parse(requestOptions))
 

@@ -40,7 +40,7 @@ class RegisterPage extends React.Component {
     .then(response => response.json())
     .then(data => {
       if (data["register"] === "success") {
-        const {register, userX} = data
+        const {_, userX} = data
         loadUser(userX)
         onRouteChange(routeOptions.SignIn);
       }
@@ -118,6 +118,7 @@ class RegisterPage extends React.Component {
 
 RegisterPage.propTypes = {
   onRouteChange: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
 };
 
 export default RegisterPage;
