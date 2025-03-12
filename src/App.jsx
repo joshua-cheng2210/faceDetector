@@ -10,6 +10,7 @@ import FaceDetector from "./Components/FaceDetector/FaceDetector"
 import 'tachyons'
 import ParticlesBg from 'particles-bg'
 
+const backendPort = 3069
 //OLD METHOD OF USING THE API
 // import clarifai from 'clarifai'
 
@@ -95,7 +96,7 @@ export class App extends Component {
         id: "",
         name: "",
         email: "",
-        entries: 0,
+        entries: 1,
         joined: ""
       }
     }
@@ -104,6 +105,29 @@ export class App extends Component {
   loadUser = (userX) => {
     this.setState({
       user: userX
+    })
+  }
+
+  updateNumEntries = () => { // only worked in POSTMAN but not yet tested through the app cuz i couldn't get the API to work
+    fetch("http://localhost:" + backendPort, {
+      method: "put",
+      headers: {'content-Type' : "application/json"},
+      body : JSON.stringify({
+        id : this.state.user.id
+      })
+    }).then(
+      response => response.json()
+    ).then(response => {
+      console.log("this is in update entries num. response = ", response)
+      if (response === "no such user"){
+        return
+      } else {
+        this.setState(prevState => ({
+          user:{
+            ...prevState.user,
+            entries: response
+          }}))
+      }
     })
   }
 
@@ -156,7 +180,7 @@ export class App extends Component {
   }
 
   // componentDidMount() {
-  //   fetch("http://localhost:3069/") // cehck the port used in the routing part fo the back end code
+  //   fetch("http://localhost:"+backendPort+"/") // check the port used in the routing part fo the back end code
   //   .then(response => response.json())
   //   .then(data => console.log(data))
   // }
@@ -178,20 +202,12 @@ export class App extends Component {
       console.log("response: ", response.json())
       response.json()})
     .then(result => {
-        console.log("result:", result)
-        this.getBoundingBoxes(result.outputs[0].data.regions);
+      console.log("result:", result)
+      this.getBoundingBoxes(result.outputs[0].data.regions);
+      this.updateNumEntries()
     })
     .catch(error => console.log('error', error));
 
-    //OLD METHOD of using the API
-    // app.models.predict("", this.state.input).then(
-    //   function(response){
-    //     console.log(response)
-    //   },
-    //   function(err){
-    //     console.log(err)
-    //   }
-    // )
 
   }
   
@@ -218,7 +234,7 @@ export class App extends Component {
         {this.state.route === routeOptions.HomeApp && <div>
           <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
           <Logo />
-          <Rank />
+          <Rank numEntries={this.state.user.entries}/>
           <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit} />
           <FaceDetector boxes={this.state.boundingBoxesInfo} inputIMG={this.state.imageURL}/>
         </div>}
