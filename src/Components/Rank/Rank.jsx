@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 export class Rank extends Component {
   render() {
-    const { numEntries } = this.props;
+    const { numEntries, name } = this.props;
     return (
       <div className="">
-        <p className='f3'>this is my Rank</p>
+        <p className='f3'>Hi {name}! this is your current Rank</p>
         <p className='f1'>#{numEntries}</p>
       </div>
     );
@@ -15,6 +15,7 @@ export class Rank extends Component {
 
 Rank.propTypes = {
   numEntries: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default Rank;

@@ -39,8 +39,10 @@ class SignIn extends React.Component {
     })
     .then(response => response.json())
     .then(data => {
-      if (data["login"] === "success"){
-        const {login, userX} = data
+      // console.log("signin data: ", data)
+      if (data !== "login failed"){
+        // const {login, userX} = data
+        loadUser(data)
         updateIsSignedIn()
         onRouteChange(routeOptions.HomeApp)
       }
@@ -107,6 +109,7 @@ class SignIn extends React.Component {
 
 SignIn.propTypes = {
   onRouteChange: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
   updateIsSignedIn: PropTypes.func.isRequired
 };
 

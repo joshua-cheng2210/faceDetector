@@ -57,7 +57,7 @@ const getClarifyRequest = ((imageURL) => {
       }
     ]
   });
-  console.log("body: ", JSON.parse(raw))
+  // console.log("body: ", JSON.parse(raw))
 
   const requestOptions = {
       method: 'POST',
@@ -106,6 +106,7 @@ export class App extends Component {
     this.setState({
       user: userX
     })
+    // console.log("loadUSer this.state.user: ", this.state.user)
   }
 
   updateNumEntries = () => { // only worked in POSTMAN but not yet tested through the app cuz i couldn't get the API to work
@@ -118,7 +119,7 @@ export class App extends Component {
     }).then(
       response => response.json()
     ).then(response => {
-      console.log("this is in update entries num. response = ", response)
+      // console.log("this is in update entries num. response = ", response)
       if (response === "no such user"){
         return
       } else {
@@ -163,7 +164,7 @@ export class App extends Component {
           const name = concept.name;
           const value = concept.value.toFixed(4);
 
-          console.log(`${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`);
+          // console.log(`${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`);
           const box = {
             "concept.name": concept.name, 
             "concept.value": concept.value.toFixed(4),
@@ -190,7 +191,7 @@ export class App extends Component {
 
     // testing with image: 
     // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
-    console.log(this.state.input)
+    // console.log(this.state.input)
     // console.log("testing submit button")
     const requestOptions = getClarifyRequest(this.state.input);
     const url = "https://api.clarifai.com/v2/models/" + this.state.MODEL_ID + "/versions/" + this.state.MODEL_VERSION_ID  + "/outputs";
@@ -222,7 +223,7 @@ export class App extends Component {
       <div className="App">
         <ParticlesBg type="circle" bg={true} className="particles"/>
         {this.state.route === routeOptions.SignIn && <div>
-          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
+          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route} loadUser={this.loadUser}/>
           <SignIn onRouteChange={this.onRouteChange} updateIsSignedIn={this.updateIsSignedIn} loadUser={this.loadUser}/>
         </div>}
 
@@ -234,7 +235,7 @@ export class App extends Component {
         {this.state.route === routeOptions.HomeApp && <div>
           <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
           <Logo />
-          <Rank numEntries={this.state.user.entries}/>
+          <Rank numEntries={this.state.user.entries} name={this.state.user.name}/>
           <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit} />
           <FaceDetector boxes={this.state.boundingBoxesInfo} inputIMG={this.state.imageURL}/>
         </div>}

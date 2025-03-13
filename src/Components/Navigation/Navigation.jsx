@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import {routeOptions} from '../../App'
+import PropTypes from 'prop-types';
 
-function Navigation({onRouteChange, currPage}) {
+function Navigation({onRouteChange, currPage, loadUser}) {
   return (
     <div>
         <nav style={{display: 'flex', justifyContent: "flex-end"}}>
           {
             currPage === routeOptions.HomeApp ? (
-              <p className="f3 link black dim underline pointer pa3" onClick={() => onRouteChange(routeOptions.SignIn)}>Sign out</p>
+              <p className="f3 link black dim underline pointer pa3" onClick={() => {onRouteChange(routeOptions.SignIn); loadUser()}}>Sign out</p>
             ) : currPage === routeOptions.SignIn ? (
               <p className="f3 link black dim underline pointer pa3" onClick={() => onRouteChange(routeOptions.Register)}>Register</p>
             ) : currPage === routeOptions.Register ? (
@@ -19,5 +20,11 @@ function Navigation({onRouteChange, currPage}) {
         </nav>
     </div>
 )}
+
+Navigation.propTypes = {
+  onRouteChange: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
+  currPage: PropTypes.oneOf(Object.values(routeOptions)).isRequired,
+};
 
 export default Navigation

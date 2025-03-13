@@ -39,11 +39,17 @@ class RegisterPage extends React.Component {
     })
     .then(response => response.json())
     .then(data => {
-      if (data["register"] === "success") {
-        const {_, userX} = data
-        loadUser(userX)
-        onRouteChange(routeOptions.SignIn);
+      // console.log(data)
+      if (data === "unable to register"){
+        return
       }
+      loadUser(data)
+      onRouteChange(routeOptions.SignIn)
+      // if (data["register"] === "success") {
+      //   const {_, userX} = data
+      //   loadUser(userX)
+      //   onRouteChange(routeOptions.SignIn);
+      // }
     });
   }
 
