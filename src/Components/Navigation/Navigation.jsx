@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import {routeOptions} from '../../App'
+import {routeOptions} from '../../constants'
 import PropTypes from 'prop-types';
 
 function Navigation({onRouteChange, currPage, loadUser}) {

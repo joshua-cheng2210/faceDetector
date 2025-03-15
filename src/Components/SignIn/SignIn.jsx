@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { routeOptions } from '../../App';
+import { routeOptions } from '../../constants';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -99,7 +99,7 @@ class SignIn extends React.Component {
             />
           </div>
           <div className="center">
-            <p>don't have an account? Register here!</p>
+            <p>don&apos;t have an account? Register here!</p>
           </div>
         </form>
       </div>

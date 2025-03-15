@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { routeOptions } from '../../App';
+import { routeOptions } from '../../constants';
 
 class RegisterPage extends React.Component {
   constructor(props) {

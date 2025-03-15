@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import './App.css'
 import SignIn from "./Components/SignIn/SignIn"
 import RegisterPage from './Components/RegisterPage/RegisterPage'
@@ -9,6 +9,7 @@ import ImageLinkForm from "./Components/ImageLinkForm/ImageLinkForm"
 import FaceDetector from "./Components/FaceDetector/FaceDetector"
 import 'tachyons'
 import ParticlesBg from 'particles-bg'
+import { routeOptions } from './constants';
 
 const backendPort = 3069
 //OLD METHOD OF USING THE API
@@ -25,15 +26,9 @@ const backendPort = 3069
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 const getClarifyRequest = ((imageURL) => {
-  // Your PAT (Personal Access Token) can be found in the Account's Security section
   const PAT = '1165295fdb9c481aacbfc38c59efc702';
-  // Specify the correct user_id/app_id pairings
-  // Since you're making inferences outside your app's scope
   const USER_ID = 'chen7647';
-  // const USER_ID = 'clarifai';
-  // const APP_ID = 'face Detector';
   const APP_ID = 'my-first-application-ddxi3q';
-  // Change these to whatever model and image URL you want to use
   const MODEL_ID = 'face-detection';
   const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
   const IMAGE_URL = imageURL;
@@ -74,11 +69,6 @@ const getClarifyRequest = ((imageURL) => {
   return requestOptions
 })
 
-export const routeOptions = {
-  SignIn: "SignIn",
-  HomeApp: "HomeApp",
-  Register: "Register"
-}
 
 export class App extends Component {
   constructor(){
@@ -177,7 +167,7 @@ export class App extends Component {
           // this.setState({boundingBoxesInfo: {... , }})
       });
       this.setState({boundingBox: BoundingBoxes_f})
-  });
+    });
   }
 
   // componentDidMount() {
@@ -208,7 +198,6 @@ export class App extends Component {
       this.updateNumEntries()
     })
     .catch(error => console.log('error', error));
-
 
   }
   
