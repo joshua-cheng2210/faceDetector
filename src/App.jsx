@@ -12,64 +12,6 @@ import ParticlesBg from 'particles-bg'
 import { routeOptions } from './constants';
 
 const backendPort = 3069
-//OLD METHOD OF USING THE API
-// import clarifai from 'clarifai'
-
-
-// const app = new Clarifai.App({
-//   apiKey: "756b1e38fc26480783353e4bfb366ac7",
-// })
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// In this section, we set the user authentication, user and app ID, model details, and the URL
-// of the image we want as an input. Change these strings to run your own example.
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-const getClarifyRequest = ((imageURL) => {
-  const PAT = '1165295fdb9c481aacbfc38c59efc702';
-  const USER_ID = 'chen7647';
-  const APP_ID = 'my-first-application-ddxi3q';
-  const MODEL_ID = 'face-detection';
-  const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
-  const IMAGE_URL = imageURL;
-  // To use image bytes, assign its variable   
-  // const IMAGE_BYTES_STRING = '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAoACgDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAYDBQcE/8QAMBAAAQMDAwMDAgQHAAAAAAAAAQIDBAAFEQYSIQcTMTJBURRhCBYikSNScXKhsdH/xAAZAQACAwEAAAAAAAAAAAAAAAAFBgIDBAf/xAAtEQABAwMBBgQHAQAAAAAAAAABAgMRAAQhMQUSE0FRYQaBocEUFiJCcrHR8P/aAAwDAQACEQMRAD8A3+RYY1unSYzCS0ttZUkAgktn0q5yT7jPyDUC4wdGwycH5U2Kt9ZQ7VI1qw5PkvQy3CSVPpf7aQjuKyFH25xzn3pHn3TVNy01Hl2hyy6YdkSpKsS9sl/6RlI3rRu3dxWd6spwnAGPIJTfl925fcLaoSDHXvyo6i9SlCQrU9wKln3OyWiaDN1RAbW3kKbSd7gPtwMkH/tTWy9afuy1iPfnXMAblITwkE4yf08cn3pSbYt1uts24XH6fUbiLAuY1MWyGkLEmUW0rcCRvUpQ5CtwKQCPgi4S1ZbDe4sd9NntDEe79m3uOBLTr0IR9jzodSMqUpTu9JJ8owD7UTT4ZCfv9PbP7860m+s+HBSrejWRuz2kAxoesGYxTW/Zlpkwo1vkuSly3UgKWQUhHJUvIHsAaKTemF8XE6sWmxyZkiaZrMh1jv8ArQNpUVqB8FW0njHqx4zRVVhsph1KlKk5xQ+7uHmikaSJrQerMByet2IwvtuTLa4xv2k7Rk84H9x/esHv92d01boenLXGcuiWrFIhLlpbcaQ2/JdK3VJCkAq2pAR7Zz7YxWudY9fxNIdQbNGkR5TyX4aisNNpUMFZAzkj4NK0jq9ZpbLr0PSlzkhrlZDaQlP3P8Q4/ap3F87bPucJEkx/hHv60b2TYXLrKN5sramYECSQRk9M6c6zmJ+eb5Hi22M7cnWGIQgFLbX0zSo4PDa1YBcTgDyMjJ/qbGPabH08SJt1Uzc9QqRliGg5QySPKvgc+TyfYDmmTUWpNYz7ctxoQdPQshCktupckDJUPUcJT6DwMq8YyaQ9VL0pCS8zapcq4SVOBZmPDO8/cnknlWcDBwn4NYnPjLkQ+qE9OtOVlYpeVHDCEkkkJyT+SuQzy5Y0ru6Ez511/Efa5s1fdkOtyVurIxgdlQAA9gOKKPwolU7remU5hCGYEgo38KUv9I/0TRTDYJCWQBSF4rIN/CRgAR0iTpVD1j1g/qDqJcJqlKcjB9bcda142MpOEJAzgeMnjyTSyze5KEuNRpDoDvC0oe4X9iAeaKKFK+oya6fbOqYbDTeEiAPKpHdS3gBLYc7RQkp3ApQog+cq8nwPJrljzxnPZbUfnugn/NFFRgEVch9xKsH0H8pg6e3x3T3UC1ajaZITGkJLoS4MKbOUrzz/ACKVRRRVzVwtoQmhG1NkWu0HuI+JI8u/Kv/Z';
-
-
-  const raw = JSON.stringify({
-    "user_app_id": {
-      "user_id": USER_ID,
-        "app_id": APP_ID
-      },
-    "inputs": [
-      {
-        "data": {
-          "image": {
-            "url": IMAGE_URL
-            // "base64": IMAGE_BYTES_STRING
-          }
-        }
-      }
-    ]
-  });
-  // console.log("body: ", JSON.parse(raw))
-
-  const requestOptions = {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Key ' + PAT,
-          // 'Access-Control-Allow-Origin' : "*",
-          // "origin" : "*"
-      },
-      body: raw
-  };
-
-  return requestOptions
-})
-
-
 export class App extends Component {
   constructor(){
     super();
@@ -80,11 +22,9 @@ export class App extends Component {
       output: "",
       isSignedIn: false,
       route: routeOptions.HomeApp,
-      MODEL_ID: 'face-detection', // got it from the getClarifyRequest()
-      MODEL_VERSION_ID: '6dc7e46bc9124c5c8824be4822abe105', // got it from the getClarifyRequest()
       user:{
         id: "",
-        name: "",
+        name: "deafultName69",
         email: "",
         entries: 1,
         joined: ""
@@ -136,22 +76,26 @@ export class App extends Component {
 
   setBoundingBoxes = (regions) => { // regions = result.outputs[0].data.regions
     // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
-    // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrQ9UwTlZHRoMoLjxfLrBzmV_hHudfYXdqcQ&s 
-    console.log("in the setBoundingBoxes function")
+    // https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/15002495/friendscast.0.0.1429818191.jpg?quality=90&strip=all&crop=11.091820987654,0,77.816358024691,100
+
+    // console.log("in the setBoundingBoxes function")
     let BoundingBoxes_f = [];
 
+    const inputIMG = document.getElementById("inputImage")
+    const width = Number(inputIMG.width)
+    const height = Number(inputIMG.height)
+    // console.log(width, height)
+
     regions.forEach(region => {
-      console.log("region: ", region)
+      // console.log("region: ", region)
       // Accessing and rounding the bounding box values
-      const inputIMG = document.getElementById("inputImage")
-      const width = Number(inputIMG.width)
-      const height = Number(inputIMG.height)
       const boundingBox = region.region_info.bounding_box;
       // TODO: might need to look into this calculations later
-      const topRow = boundingBox.top_row.toFixed(3);
-      const leftCol = boundingBox.left_col.toFixed(3);
-      const bottomRow = boundingBox.bottom_row.toFixed(3);
-      const rightCol = boundingBox.right_col.toFixed(3);
+      const topRow = boundingBox.top_row.toFixed(3) * height;
+      const rightCol = width - (boundingBox.right_col.toFixed(3) * width);
+      const bottomRow = height - (boundingBox.bottom_row.toFixed(3) * height);
+      const leftCol = boundingBox.left_col.toFixed(3) * width;
+      // console.log(`BBox: ${topRow}, ${rightCol}, ${bottomRow}, ${leftCol}`);
 
       region.data.concepts.forEach(concept => {
           // Accessing and rounding the concept value
@@ -160,56 +104,56 @@ export class App extends Component {
 
           // console.log(`${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`);
           const box = {
-            "concept.name": concept.name, 
-            "concept.value": concept.value.toFixed(4),
+            "name": name, 
+            "value": value,
             "topRow": topRow,
             "leftCol": leftCol,
             "bottomRow": bottomRow,
             "rightCol": rightCol
           };
-          console.log("box: ", box)
+          // console.log("box: ", box)
           BoundingBoxes_f.push(box);
-          // this.setState({boundingBoxesInfo: {... , }})
+          // console.log("BoundingBoxes_f: ", BoundingBoxes_f)
       });
-      this.setState(prevState => ({
-        boundingBoxesInfo: [...prevState.boundingBoxesInfo, ...BoundingBoxes_f]
-      }),
-      () => {
-        console.log("Updated boundingBoxesInfo: ", this.state.boundingBoxesInfo);
+      this.setState({
+        boundingBoxesInfo: BoundingBoxes_f
       });
     });
+    this.setState((prev) => {
+      prev
+    }
+    , () => {console.log(this.state.boundingBoxesInfo)}
+    )
   }
 
   // fetching from back end instead of client side for security safety
   onButtonSubmit2 = () => {
-    this.setState({boundingBox: ""})
     // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
-    // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrQ9UwTlZHRoMoLjxfLrBzmV_hHudfYXdqcQ&s 
-    this.setState({imageURL: this.state.input})
-
-    fetch("http://localhost:3069/promptingClarifai", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        imgURL : this.state.imageURL
+    // https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/15002495/friendscast.0.0.1429818191.jpg?quality=90&strip=all&crop=11.091820987654,0,77.816358024691,100
+    this.setState({ boundingBoxesInfo: "", imageURL: this.state.input  }, () => {
+      // Proceed with setting the imageURL and making the fetch request
+      fetch("http://localhost:3069/promptingClarifai", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          imgURL: this.state.input,
+        }),
+      }).then((response) => {
+        return response.json();
       })
-    }).then((response) => {
-      // console.log("response: ", response)
-      return response.json()
-    }).then(data => {
-      // console.log("\n\n------------------------\n\n")
-      console.log("data: ", data);
-      if (data.status.code !== 10000){
-        console.log('fail to get output')
-        return 
-      }
-      console.log("\n\ndata.outputs[0].regions: ", data.outputs[0].data.regions);
-      console.log("\n\ndata.outputs[0].regions.region_info: ", data.outputs[0].data.regions[0].region_info);
-      return this.setBoundingBoxes(data.outputs[0].data.regions)
-    }).catch((err) => {
-      console.log("/n/n----------there is an error-------------/n/n")
-      console.log(err)
-    })
+      .then((data) => {
+        if (data.status.code !== 10000) {
+          console.log("Failed to get output");
+          return;
+        }
+        // TODO: update the rank
+        return this.setBoundingBoxes(data.outputs[0].data.regions);
+      })
+      .catch((err) => {
+        console.log("\n\n----------There is an error-------------\n\n");
+        console.log(err);
+      });
+    });
   }
   
   onRouteChange = (newRoute) => {
@@ -233,7 +177,7 @@ export class App extends Component {
         </div>}
 
         {this.state.route === routeOptions.HomeApp && <div>
-          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
+          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route} loadUser={this.loadUser}/>
           <Logo />
           <Rank numEntries={this.state.user.entries} name={this.state.user.name}/>
           <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit2} />
