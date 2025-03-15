@@ -134,10 +134,14 @@ export class App extends Component {
     // console.log(this.state)
   }
 
-  getBoundingBoxes = (regions) => { // regions = result.outputs[0].data.regions
+  setBoundingBoxes = (regions) => { // regions = result.outputs[0].data.regions
+    // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
+    // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrQ9UwTlZHRoMoLjxfLrBzmV_hHudfYXdqcQ&s 
+    console.log("in the setBoundingBoxes function")
     let BoundingBoxes_f = [];
 
     regions.forEach(region => {
+      console.log("region: ", region)
       // Accessing and rounding the bounding box values
       const inputIMG = document.getElementById("inputImage")
       const width = Number(inputIMG.width)
@@ -163,47 +167,24 @@ export class App extends Component {
             "bottomRow": bottomRow,
             "rightCol": rightCol
           };
+          console.log("box: ", box)
           BoundingBoxes_f.push(box);
           // this.setState({boundingBoxesInfo: {... , }})
       });
-      this.setState({boundingBox: BoundingBoxes_f})
+      this.setState(prevState => ({
+        boundingBoxesInfo: [...prevState.boundingBoxesInfo, ...BoundingBoxes_f]
+      }),
+      () => {
+        console.log("Updated boundingBoxesInfo: ", this.state.boundingBoxesInfo);
+      });
     });
   }
 
-  // componentDidMount() {
-  //   fetch("http://localhost:"+backendPort+"/") // check the port used in the routing part fo the back end code
-  //   .then(response => response.json())
-  //   .then(data => console.log(data))
-  // }
-
-  // this wont work because you need to send the fetch not from the client or front end for security putporses
-  // onButtonSubmit = () => {
-  //   this.setState({imageURL: this.state.input})
-  //   // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
-  //   const requestOptions = getClarifyRequest(this.state.input);
-  //   const url = "https://api.clarifai.com/v2/models/" + this.state.MODEL_ID + "/versions/" + this.state.MODEL_VERSION_ID  + "/outputs";
-
-  //   fetch(url, requestOptions) 
-  //   .then(response => {
-  //     // console.log("response: ", response)
-  //     return response.json()
-  //   }).then(data => {
-  //     // console.log("\n\n------------------------\n\n")
-  //     console.log("data: ", data);
-  //     console.log("\n\ndata.outputs[0].regions: ", data.outputs[0].data.regions);
-  //     console.log("\n\ndata.outputs[0].regions.region_info: ", data.outputs[0].data.regions[0].region_info);
-  //     console.log("\n\ndata.outputs[0].regions.data: ", data.outputs[0].data.regions[0].data);
-  //     return data.outputs[0].data.regions;
-  //   }).catch(error => {
-  //     // console.log("\n\n---------------there is an error----------\n\n")
-  //     console.log('error', error)
-  //     return error
-  //   });}
-
-    // this.getBoundingBoxes(result.outputs[0].data.regions);
-    // this.updateNumEntries()
-
+  // fetching from back end instead of client side for security safety
   onButtonSubmit2 = () => {
+    this.setState({boundingBox: ""})
+    // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
+    // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrQ9UwTlZHRoMoLjxfLrBzmV_hHudfYXdqcQ&s 
     this.setState({imageURL: this.state.input})
 
     fetch("http://localhost:3069/promptingClarifai", {
@@ -213,15 +194,20 @@ export class App extends Component {
         imgURL : this.state.imageURL
       })
     }).then((response) => {
+      // console.log("response: ", response)
       return response.json()
     }).then(data => {
       // console.log("\n\n------------------------\n\n")
       console.log("data: ", data);
+      if (data.status.code !== 10000){
+        console.log('fail to get output')
+        return 
+      }
       console.log("\n\ndata.outputs[0].regions: ", data.outputs[0].data.regions);
       console.log("\n\ndata.outputs[0].regions.region_info: ", data.outputs[0].data.regions[0].region_info);
-      console.log("\n\ndata.outputs[0].regions.data: ", data.outputs[0].data.regions[0].data);
-      return data.outputs[0].data.regions;
+      return this.setBoundingBoxes(data.outputs[0].data.regions)
     }).catch((err) => {
+      console.log("/n/n----------there is an error-------------/n/n")
       console.log(err)
     })
   }
