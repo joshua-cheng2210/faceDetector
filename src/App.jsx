@@ -176,29 +176,54 @@ export class App extends Component {
   //   .then(data => console.log(data))
   // }
 
-  onButtonSubmit = () => {
+  // this wont work because you need to send the fetch not from the client or front end for security putporses
+  // onButtonSubmit = () => {
+  //   this.setState({imageURL: this.state.input})
+  //   // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
+  //   const requestOptions = getClarifyRequest(this.state.input);
+  //   const url = "https://api.clarifai.com/v2/models/" + this.state.MODEL_ID + "/versions/" + this.state.MODEL_VERSION_ID  + "/outputs";
+
+  //   fetch(url, requestOptions) 
+  //   .then(response => {
+  //     // console.log("response: ", response)
+  //     return response.json()
+  //   }).then(data => {
+  //     // console.log("\n\n------------------------\n\n")
+  //     console.log("data: ", data);
+  //     console.log("\n\ndata.outputs[0].regions: ", data.outputs[0].data.regions);
+  //     console.log("\n\ndata.outputs[0].regions.region_info: ", data.outputs[0].data.regions[0].region_info);
+  //     console.log("\n\ndata.outputs[0].regions.data: ", data.outputs[0].data.regions[0].data);
+  //     return data.outputs[0].data.regions;
+  //   }).catch(error => {
+  //     // console.log("\n\n---------------there is an error----------\n\n")
+  //     console.log('error', error)
+  //     return error
+  //   });}
+
+    // this.getBoundingBoxes(result.outputs[0].data.regions);
+    // this.updateNumEntries()
+
+  onButtonSubmit2 = () => {
     this.setState({imageURL: this.state.input})
 
-    // testing with image: 
-    // https://www.shutterstock.com/image-photo/happy-businessman-enjoying-home-office-600nw-2257033579.jpg
-    // console.log(this.state.input)
-    // console.log("testing submit button")
-    const requestOptions = getClarifyRequest(this.state.input);
-    const url = "https://api.clarifai.com/v2/models/" + this.state.MODEL_ID + "/versions/" + this.state.MODEL_VERSION_ID  + "/outputs";
-    // console.log("url", url)
-    // console.log("requestOptions: ", JSON.parse(requestOptions))
-
-    fetch(url, requestOptions) // optionally specify the model_version_id to get different accurate models like this // fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
-    .then(response => {
-      console.log("response: ", response.json())
-      response.json()})
-    .then(result => {
-      console.log("result:", result)
-      this.getBoundingBoxes(result.outputs[0].data.regions);
-      this.updateNumEntries()
+    fetch("http://localhost:3069/promptingClarifai", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        imgURL : this.state.imageURL
+      })
+    }).then((response) => {
+      return response.json()
+    }).then(data => {
+      // console.log("\n\n------------------------\n\n")
+      console.log("data: ", data);
+      console.log("\n\ndata.outputs[0].regions: ", data.outputs[0].data.regions);
+      console.log("\n\ndata.outputs[0].regions.region_info: ", data.outputs[0].data.regions[0].region_info);
+      console.log("\n\ndata.outputs[0].regions.data: ", data.outputs[0].data.regions[0].data);
+      return data.outputs[0].data.regions;
+    }).catch((err) => {
+      console.log(err)
     })
-    .catch(error => console.log('error', error));
-
   }
   
   onRouteChange = (newRoute) => {
@@ -225,7 +250,7 @@ export class App extends Component {
           <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
           <Logo />
           <Rank numEntries={this.state.user.entries} name={this.state.user.name}/>
-          <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit} />
+          <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit2} />
           <FaceDetector boxes={this.state.boundingBoxesInfo} inputIMG={this.state.imageURL}/>
         </div>}
         

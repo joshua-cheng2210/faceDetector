@@ -7,7 +7,7 @@ const ImageLinkForm = (({ onInputchange, onButtonSubmit }) => {
     <div className='ba pa3'>
       <p className="f3 center">this will be my ImageLinkForm</p>
       <div className="center pa4br3 shadow-5">
-        <input type="text" className="f4 pa4 w-70 center" onChange={onInputchange}></input>
+        <input type="ul" className="f4 pa4 w-70 center" onChange={onInputchange} required ></input>
         <button className="w-30 grow f4 link ph3 pv2 dib pa4 bg-light-purple" onClick={onButtonSubmit}>Detect</button>
       </div>
     </div>
