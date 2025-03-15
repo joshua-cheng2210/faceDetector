@@ -1,4 +1,3 @@
-import React, { Component } from 'react'
 import "./ImageLinkForm.css"
 import PropTypes from 'prop-types';
 
