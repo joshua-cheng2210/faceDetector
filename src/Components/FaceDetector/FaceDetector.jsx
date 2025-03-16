@@ -6,7 +6,6 @@ import './FaceDetector.css'
 // https://mymodernmet.com/wp/wp-content/uploads/2020/10/faces-in-a-crowd.jpg
 
 const FaceDetector = ({boxes, inputIMG}) => {
-  console.log("boxes: ", boxes)
   return (
     <div className='center' style={{ position: "relative", width: "500px", height: "auto" }}>
       {inputIMG && <img id="inputImage" src={inputIMG} alt="clarify input or output image" width='500px' height="auto"></img>}
@@ -44,10 +43,11 @@ const calculateColor = (value) => {
 FaceDetector.propTypes = {
   boxes: PropTypes.arrayOf(
     PropTypes.shape({
-      topRow: PropTypes.string.isRequired,
-      rightCol: PropTypes.string.isRequired,
-      bottomRow: PropTypes.string.isRequired,
-      leftCol: PropTypes.string.isRequired,
+      topRow: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      rightCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      bottomRow: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      leftCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     })
   ).isRequired, // boxes must be an array of objects with specific properties
   inputIMG: PropTypes.string.isRequired, // inputIMG must be a string (URL)

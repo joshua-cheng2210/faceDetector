@@ -26,7 +26,7 @@ class RegisterPage extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    const { onRouteChange, loadUser } = this.props;
+    const { onRouteChange, loadAcc } = this.props;
     // Perform registration logic here, e.g., send data to the server
     fetch("http://localhost:3069/register", {
       method: "post",
@@ -43,11 +43,11 @@ class RegisterPage extends React.Component {
       if (data === "unable to register"){
         return
       }
-      loadUser(data)
+      loadAcc(data)
       onRouteChange(routeOptions.SignIn)
       // if (data["register"] === "success") {
       //   const {_, userX} = data
-      //   loadUser(userX)
+      //   loadAcc(userX)
       //   onRouteChange(routeOptions.SignIn);
       // }
     });
@@ -124,7 +124,7 @@ class RegisterPage extends React.Component {
 
 RegisterPage.propTypes = {
   onRouteChange: PropTypes.func.isRequired,
-  loadUser: PropTypes.func.isRequired,
+  loadAcc: PropTypes.func.isRequired,
 };
 
 export default RegisterPage;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export class Rank extends Component {
@@ -14,7 +14,7 @@ export class Rank extends Component {
 }
 
 Rank.propTypes = {
-  numEntries: PropTypes.number.isRequired,
+  numEntries: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 };
 

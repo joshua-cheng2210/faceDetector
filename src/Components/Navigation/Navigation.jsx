@@ -1,7 +1,7 @@
 import {routeOptions} from '../../constants'
 import PropTypes from 'prop-types';
 
-function Navigation({onRouteChange, currPage, loadUser}) {
+function Navigation({onRouteChange, currPage, loadAcc}) {
   return (
     <div>
         <nav style={{display: 'flex', justifyContent: "flex-end"}}>
@@ -9,7 +9,7 @@ function Navigation({onRouteChange, currPage, loadUser}) {
             currPage === routeOptions.HomeApp ? (
               <p className="f3 link black dim underline pointer pa3" onClick={() => {
                 onRouteChange(routeOptions.SignIn); 
-                loadUser({})
+                loadAcc({})
               }}>Sign out</p>
             ) : currPage === routeOptions.SignIn ? (
               <p className="f3 link black dim underline pointer pa3" onClick={() => onRouteChange(routeOptions.Register)}>Register</p>
@@ -25,7 +25,7 @@ function Navigation({onRouteChange, currPage, loadUser}) {
 
 Navigation.propTypes = {
   onRouteChange: PropTypes.func.isRequired,
-  loadUser: PropTypes.func.isRequired,
+  loadAcc: PropTypes.func,
   currPage: PropTypes.oneOf(Object.values(routeOptions)).isRequired,
 };
 

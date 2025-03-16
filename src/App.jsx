@@ -12,35 +12,42 @@ import ParticlesBg from 'particles-bg'
 import { routeOptions } from './constants';
 
 const backendPort = 3069
+
+const initialState ={
+  input: "",
+  imageURL: "",
+  boundingBoxesInfo: [],
+  output: "",
+  isSignedIn: false,
+  route: routeOptions.SignIn,
+  user:{
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: ""
+  }
+}
 export class App extends Component {
   constructor(){
     super();
-    this.state={
-      input: "",
+    this.state = initialState
+  }
+
+  loadAcc = (userX) => {
+    this.setState(() => ({
+      input : "",
       imageURL: "",
       boundingBoxesInfo: [],
       output: "",
-      isSignedIn: false,
-      route: routeOptions.HomeApp,
-      user:{
-        id: "",
-        name: "deafultName69",
-        email: "",
-        entries: 1,
-        joined: ""
-      }
-    }
-  }
-
-  loadUser = (userX) => {
-    this.setState({
-      user: userX
+      user : userX
     })
-    // console.log("loadUSer this.state.user: ", this.state.user)
+    // , () => {console.log(this.state)}
+    )
   }
 
   updateNumEntries = () => { // only worked in POSTMAN but not yet tested through the app cuz i couldn't get the API to work
-    fetch("http://localhost:" + backendPort, {
+    fetch(`http://localhost:${backendPort}/image`, {
       method: "put",
       headers: {'content-Type' : "application/json"},
       body : JSON.stringify({
@@ -50,16 +57,18 @@ export class App extends Component {
       response => response.json()
     ).then(response => {
       // console.log("this is in update entries num. response = ", response)
-      if (response === "no such user"){
+      if (response === "failed to update rank"){
         return
       } else {
         this.setState(prevState => ({
           user:{
             ...prevState.user,
-            entries: response
-          }}))
+            entries: response.entries
+        }})
+        // , () => {console.log("updateNumEntries: ", this.state)}
+        )
       }
-    })
+    }).catch((err) => {console.log(err)})
   }
 
   updateIsSignedIn = () => {
@@ -122,7 +131,7 @@ export class App extends Component {
     this.setState((prev) => {
       prev
     }
-    , () => {console.log(this.state.boundingBoxesInfo)}
+    // , () => {console.log(this.state.boundingBoxesInfo)}
     )
   }
 
@@ -132,7 +141,7 @@ export class App extends Component {
     // https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/15002495/friendscast.0.0.1429818191.jpg?quality=90&strip=all&crop=11.091820987654,0,77.816358024691,100
     this.setState({ boundingBoxesInfo: "", imageURL: this.state.input  }, () => {
       // Proceed with setting the imageURL and making the fetch request
-      fetch("http://localhost:3069/promptingClarifai", {
+      fetch(`http://localhost:${backendPort}/promptingClarifai`, {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -147,11 +156,11 @@ export class App extends Component {
           return;
         }
         // TODO: update the rank
+        this.updateNumEntries()
         return this.setBoundingBoxes(data.outputs[0].data.regions);
       })
-      .catch((err) => {
-        console.log("\n\n----------There is an error-------------\n\n");
-        console.log(err);
+      .catch(() => {
+        console.log("Failed to get output");
       });
     });
   }
@@ -167,17 +176,17 @@ export class App extends Component {
       <div className="App">
         <ParticlesBg type="circle" bg={true} className="particles"/>
         {this.state.route === routeOptions.SignIn && <div>
-          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route} loadUser={this.loadUser}/>
-          <SignIn onRouteChange={this.onRouteChange} updateIsSignedIn={this.updateIsSignedIn} loadUser={this.loadUser}/>
+          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route} loadAcc={this.loadAcc}/>
+          <SignIn onRouteChange={this.onRouteChange} updateIsSignedIn={this.updateIsSignedIn} loadAcc={this.loadAcc}/>
         </div>}
 
         {this.state.route === routeOptions.Register && <div>
           <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route}/>
-          <RegisterPage onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
+          <RegisterPage onRouteChange={this.onRouteChange} loadAcc={this.loadAcc}/>
         </div>}
 
         {this.state.route === routeOptions.HomeApp && <div>
-          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route} loadUser={this.loadUser}/>
+          <Navigation onRouteChange={this.onRouteChange} currPage={this.state.route} loadAcc={this.loadAcc}/>
           <Logo />
           <Rank numEntries={this.state.user.entries} name={this.state.user.name}/>
           <ImageLinkForm onInputchange={this.onInputchange} onButtonSubmit={this.onButtonSubmit2} />
