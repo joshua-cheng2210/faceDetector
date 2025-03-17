@@ -11,8 +11,6 @@ import 'tachyons'
 import ParticlesBg from 'particles-bg'
 import { routeOptions } from './constants';
 
-const backendPort = 3069
-
 const initialState ={
   input: "",
   imageURL: "",
