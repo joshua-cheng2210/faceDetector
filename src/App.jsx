@@ -47,7 +47,7 @@ export class App extends Component {
   }
 
   updateNumEntries = () => { // only worked in POSTMAN but not yet tested through the app cuz i couldn't get the API to work
-    fetch(`http://localhost:${backendPort}/image`, {
+    fetch(`https://facedetector-backend.onrender.com/image`, {
       method: "put",
       headers: {'content-Type' : "application/json"},
       body : JSON.stringify({
@@ -141,7 +141,7 @@ export class App extends Component {
     // https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/15002495/friendscast.0.0.1429818191.jpg?quality=90&strip=all&crop=11.091820987654,0,77.816358024691,100
     this.setState({ boundingBoxesInfo: "", imageURL: this.state.input  }, () => {
       // Proceed with setting the imageURL and making the fetch request
-      fetch(`http://localhost:${backendPort}/promptingClarifai`, {
+      fetch(`https://facedetector-backend.onrender.com/promptingClarifai`, {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
