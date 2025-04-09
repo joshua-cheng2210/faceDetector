@@ -5,4 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/faceDetector/',
   plugins: [react()],
+  preview: {
+    port: parseInt(process.env.PORT) || 8080, // Use PORT env variable or default to 4173
+    host: '0.0.0.0', // Allow access from outside the container
+  },
 })
