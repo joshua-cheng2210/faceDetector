@@ -1,4 +1,9 @@
+# to use the website
+note: this website may take a few seconds to load, because render.com may not keep the server running all the time
+- go to https://facedetector-web.onrender.com/
+
 # to run the front end website through docker image
+note: this is unnecessary if you are running the website through render.com
 - if you haven't built the docker image yet, run the following command:
 - docker build -t [image name] .
 - [image name] can be any name you want to give to the image, for example, faceDetector
