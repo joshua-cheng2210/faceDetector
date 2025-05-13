@@ -2,6 +2,9 @@
 note: this website may take a few seconds to load, because render.com may not keep the server running all the time
 - go to https://facedetector-web.onrender.com/
 
+# information on hosting website
+- https://dashboard.render.com/web/srv-d0hsds56ubrc73cuh1r0/deploys/dep-d0hsijl6ubrc73culdj0
+
 # to run the front end website through docker image
 note: this is unnecessary if you are running the website through render.com
 - if you haven't built the docker image yet, run the following command:
