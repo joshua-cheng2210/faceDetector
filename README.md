@@ -14,3 +14,10 @@ note: this is unnecessary if you are running the website through render.com
 - the console will then print out this url: http://localhost:8080/faceDetector/
 - 8080 is the port docker used to run the image, but to access the website, we need to use port 5000.
 - so go to a browser and type in http://localhost:5000/faceDetector/
+
+# learnings
+- javascript
+- react
+- express end points
+- docker
+- hosting on render.com
