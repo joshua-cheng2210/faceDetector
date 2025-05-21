@@ -1,7 +1,7 @@
 # to use the website
 note: this website may take a few seconds to load, because render.com may not keep the server running all the time
-![waiting for the render server to boot up](work history\render-web.png)
-![webite demo](work history\faceDetector-web.png)
+![waiting for the render server to boot up](workHistory\render-web.png)
+![webite demo](workHistory\faceDetector-web.png)
 - go to https://facedetector-web.onrender.com/
 
 # information on hosting website
