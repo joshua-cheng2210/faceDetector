@@ -64,3 +64,4 @@ note: this is unnecessary if you are running the website through render.com
     - use express-session to store the session in the server
     - use express-session to store the session in the client
 - try hosting it through AWS and figure out how to use AWS S3 to store the images and how to scale the website usage too
+- write some unit tests to test the website
