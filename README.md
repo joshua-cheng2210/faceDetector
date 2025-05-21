@@ -17,7 +17,45 @@ note: this is unnecessary if you are running the website through render.com
 
 # learnings
 - javascript
+    - using asynchronous http request (get, post, put, delete)
+- using vite for development
+    - vite is a build tool that aims to provide a faster and leaner development experience for modern web projects
+    - vite is a frontend build tool that provides a development server and a build command
+    - vite uses esbuild under the hood to provide fast builds and hot module replacement (HMR)
+    - converts jsx to js
 - react
-- express end points
+    - creating reusable components
+    - react hooks
+    - react useState
+    - react props
+    - component lifecycle : componentDidMount, componentDidUpdate, componentWillUnmount
+- express end points to connect between front end and back end
 - docker
-- hosting on render.com
+    - docker image
+    - docker container
+    - docker build : to build the docker image
+    - writing Dockerfile so that the docker image can be built with teh docker built command
+    - docker run : to run the docker image (automatically creates a container)
+    - using .Dockerignore file to ignore files that are not needed in the docker image. (like .gitignore)
+    - docker port : 2 ports are needed to run the docker image
+        - one port is used to run the docker image
+        - the other port is used to access the website (which is unnecessary if you are using render.com)
+    - docker ps : to see the running containers
+- render.com
+    - https://dashboard.render.com/web/srv-d0hsds56ubrc73cuh1r0/logs
+    - hosting the front end part of the website on render.com
+    - changing all the featch request url to the backend url hsoted throug render.com of another repo
+- creating environmental variables (i ddin't use a .env file, but I should have)
+    
+# futre development
+- add more ways to upload images rather than pasting the image url from google
+- improve the UI
+    - better design
+    - better CSS styling
+    - more user friendly: maybe more interactve buttons or animations
+    - better color scheme
+    - better layout which is responsive to different screen sizes
+- improve the security
+    - use express-session to store the session in the server
+    - use express-session to store the session in the client
+- try hosting it through AWS and figure out how to use AWS S3 to store the images and how to scale the website usage too
