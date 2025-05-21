@@ -49,7 +49,7 @@ note: this is unnecessary if you are running the website through render.com
     - changing all the featch request url to the backend url hsoted throug render.com of another repo
 - creating environmental variables (i ddin't use a .env file, but I should have)
     
-# futre development
+# future development
 - add more ways to upload images rather than pasting the image url from google
 - improve the UI
     - better design
