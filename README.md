@@ -18,6 +18,9 @@ note: this is unnecessary if you are running the website through render.com
 - so go to a browser and type in http://localhost:5000/faceDetector/
 
 # learnings
+- quick developments
+    - using bootstrap for quick UI development (https://getbootstrap.com/docs/5.3/getting-started/download/#:~:text=%3Clink%20href,%3E%3C/script%3E)
+    - using animation.css for quick animation development (https://animate.style/)
 - javascript
     - using asynchronous http request (get, post, put, delete)
 - using vite for development
