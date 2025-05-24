@@ -11,6 +11,7 @@ note: this website may take a few seconds to load, because render.com may not ke
 - quick developments
     - using bootstrap for quick UI development (https://getbootstrap.com/docs/5.3/getting-started/download/#:~:text=%3Clink%20href,%3E%3C/script%3E)
     - using animation.css for quick animation development (https://animate.style/)
+    - babel is used to convert modern JavaScript code into a version that can run in older browsers
 - javascript
     - using asynchronous http request (get, post, put, delete)
 - using vite for development
