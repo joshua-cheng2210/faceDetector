@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import './App.css'
 import SignIn from "./Components/SignIn/SignIn"
 import RegisterPage from './Components/RegisterPage/RegisterPage'

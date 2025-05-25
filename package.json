@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "cors": "^2.8.5",
