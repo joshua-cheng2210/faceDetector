@@ -1,11 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
-import { screen } from '@testing-library/react';
 import { routeOptions } from './constants';
 
 describe('App Component', () => {
-  it('renders without crashing', () => {
+  test('renders without crashing', () => {
     render(<App />);
   });
 });
@@ -17,30 +16,47 @@ jest.mock('./Components/Navigation/Navigation', () => () => <div data-testid="Na
 jest.mock('./Components/Logo/Logo', () => () => <div data-testid="Logo" />);
 jest.mock('./Components/Rank/Rank', () => () => <div data-testid="Rank" />);
 jest.mock('./Components/ImageLinkForm/ImageLinkForm', () => (props) => (
-  <input data-testid="ImageLinkForm" onChange={props.onInputchange} />
+  <div>
+    <input data-testid="ImageLinkForm" onChange={props.onInputchange} />
+    <button data-testid="DetectButton" onClick={props.onButtonSubmit}>Detect</button>
+  </div>
 ));
 jest.mock('./Components/FaceDetector/FaceDetector', () => () => <div data-testid="FaceDetector" />);
 jest.mock('particles-bg', () => () => <div data-testid="ParticlesBg" />);
 
 
 describe('App Component', () => {
-  it('renders SignIn by default', () => {
+  test('renders SignIn by default', () => {
     render(<App />);
     expect(screen.getByTestId('SignIn')).toBeInTheDocument();
     expect(screen.getByTestId('Navigation')).toBeInTheDocument();
   });
 
-  it('renders RegisterPage when route is Register', () => {
-  const { container } = render(<App />);
-  const instance = container.firstChild._owner?.stateNode;
-  if (instance) {
-    instance.onRouteChange(routeOptions.Register);
-    instance.forceUpdate();
-    expect(screen.getByTestId('RegisterPage')).toBeInTheDocument();
-  }
-});
+  // test('Detect button calls onButtonSubmit', () => {
+  //   const { container } = render(<App />);
+  //   console.log(container)
+  //   const instance = container.firstChild._owner?.stateNode;
+  //   if (instance) {
+  //     instance.setState({ route: routeOptions.HomeApp });
+  //     instance.forceUpdate();
+  //     // Now the HomeApp UI (including DetectButton) is rendered
+  //     const button = screen.getByTestId('DetectButton');
+  //     fireEvent.click(button);
+  //     // Add your assertions here
+  //   }
+  // });
 
-  it('calls onRouteChange and updates state', () => {
+  test('renders RegisterPage when route is Register', () => {
+    const { container } = render(<App />);
+    const instance = container.firstChild._owner?.stateNode;
+    if (instance) {
+      instance.onRouteChange(routeOptions.Register);
+      instance.forceUpdate();
+      expect(screen.getByTestId('RegisterPage')).toBeInTheDocument();
+    }
+  });
+
+  test('calls onRouteChange and updates state', () => {
     const { container } = render(<App />);
     const instance = container.firstChild._owner?.stateNode;
     if (instance) {
@@ -51,7 +67,7 @@ describe('App Component', () => {
     }
   });
 
-  it('renders HomeApp when route is HomeApp', () => {
+  test('renders HomeApp when route is HomeApp', () => {
     const { container } = render(<App />);
     const instance = container.firstChild._owner?.stateNode;
     if (instance) {
@@ -65,7 +81,7 @@ describe('App Component', () => {
     }
   });
 
-  it('onInputchange updates input state', () => {
+  test('onInputchange updates input state', () => {
     const { container } = render(<App />);
     const instance = container.firstChild._owner?.stateNode;
     if (instance) {
@@ -75,7 +91,7 @@ describe('App Component', () => {
     }
   });
 
-  it('loadAcc updates user state', () => {
+  test('loadAcc updates user state', () => {
     const { container } = render(<App />);
     const instance = container.firstChild._owner?.stateNode;
     if (instance) {
@@ -85,7 +101,7 @@ describe('App Component', () => {
     }
   });
 
-  it('updateNumEntries updates entries on success', async () => {
+  test('updateNumEntries updates entries on success', async () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve({ entries: 42 }),
@@ -101,7 +117,7 @@ describe('App Component', () => {
     global.fetch.mockRestore();
   });
 
-  it('onButtonSubmit2 calls fetch and updates boundingBoxesInfo', async () => {
+  test('onButtonSubmit2 calls fetch and updates boundingBoxesInfo', async () => {
     // Mock fetch and setBoundingBoxes
     const mockSetBoundingBoxes = jest.fn();
     const mockData = {

@@ -42,6 +42,14 @@ note: this website may take a few seconds to load, because render.com may not ke
     - hosting the front end part of the website on render.com
     - changing all the featch request url to the backend url hsoted throug render.com of another repo
 - creating environmental variables (i ddin't use a .env file, but I should have)
+- writing test cases
+    - files added or changed:
+        - *.test.jsx
+        - .babelrc
+        - __mocks__/fileMock.js
+        - just.config.js
+    - using jest to run the test cases
+
     
 # to run the front end website through docker image
 note: this is unnecessary if you are running the website through render.com
