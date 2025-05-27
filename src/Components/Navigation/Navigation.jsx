@@ -1,3 +1,4 @@
+import React from 'react';
 import {routeOptions} from '../../constants'
 import PropTypes from 'prop-types';
 

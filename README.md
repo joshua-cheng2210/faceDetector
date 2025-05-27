@@ -49,6 +49,8 @@ note: this website may take a few seconds to load, because render.com may not ke
         - __mocks__/fileMock.js
         - just.config.js
     - using jest to run the test cases
+    - how to test:
+        - test the behaviour of the components and functions and not how they are implemented
 
     
 # to run the front end website through docker image
